@@ -1,12 +1,4 @@
 {
-    "traits": [
-        {
-            "name": "colour",
-            "types" : ["red", "blue"]
-        },
-        {
-            "name" : "environment",
-            "types" : ["sun", "rainbow"]
-        }
-    ]
+    "environments": ["sun", "rainbow"],
+    "colours": ["red", "blue"]
 }

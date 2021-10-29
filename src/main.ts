@@ -1,13 +1,24 @@
 "use strict";
-import {Config, Trait} from "./types"
+import {Config} from "./types"
+import {combine} from "./combine"
 
 var input = require('../config.json');
+var fs = require('fs');
 
 export function go() {
-    let config = input as Config
 
-    for (var trait of config.traits) {
-        console.log(trait.name)
-        console.log(`...${trait.types.join(", ")}`)
+    let out = "products"
+    if (!fs.existsSync(out)){
+        fs.mkdirSync(out);
+    }
+
+    let config = input as Config
+    let filename = 0
+
+    for (var environment of config.environments) {
+        for (var colour of config.colours) {
+            combine(`${filename}`, environment, colour)
+            filename++
+        }
     }
 }
