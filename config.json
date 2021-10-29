@@ -1,0 +1,12 @@
+{
+    "traits": [
+        {
+            "name": "colour",
+            "types" : ["red", "blue"]
+        },
+        {
+            "name" : "environment",
+            "types" : ["sun", "rainbow"]
+        }
+    ]
+}
