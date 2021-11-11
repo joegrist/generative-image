@@ -16,9 +16,11 @@ export function go() {
     let filename = 0
 
     for (var environment of config.environments) {
-        for (var colour of config.colours) {
-            combine(`${filename}`, environment, colour)
-            filename++
+        for (var body of config.bodies) {
+            for (var hat of config.hats) {
+                combine(`${filename}`, environment, body, hat)
+                filename++
+            }
         }
     }
 }

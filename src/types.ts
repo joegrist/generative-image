@@ -1,4 +1,5 @@
 export interface Config {
     environments: Array<string>
-    colours: Array<string>
+    bodies: Array<string>
+    hats: Array<string>
 }

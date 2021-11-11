@@ -1,10 +1,13 @@
 const sharp = require("sharp");
 
-export async function combine(filename: string, environment: string, colour: string) {
+export async function combine(filename: string, environment: string, body: string, hat: string) {
     try {
-        console.log(`Combining ${environment} with ${colour}` )
+        console.log(`Combining ${environment} with ${hat}` )
         await sharp(`img/environments/${environment}.png`)
-            .composite([{input: `img/colours/${colour}.png`}])
+            .composite([
+                {input: `img/bodies/${body}.png`},
+                {input: `img/hats/${hat}.png`}
+            ])
             .toFile(`products/${filename}.png`)
     } catch (error) {
             console.log(error);
