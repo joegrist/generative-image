@@ -15,12 +15,18 @@ export function go() {
     let config = input as Config
     let filename = 0
 
-    for (var environment of config.environments) {
-        for (var body of config.bodies) {
-            for (var hat of config.hats) {
-                if (!excluded(environment, hat, body )){
-                    combine(`${filename}`, environment, body, hat)
-                    filename++
+    for (var sky of config.skies) {
+        for (var backdrop of config.backdrops) {
+            for (var location of config.locations) {
+                for (var body of config.bodies) {
+                    for (var eyes of config.eyes) {
+                        for (var headwear of config.headwear) {
+                            if (!excluded(sky, backdrop, location, body, eyes, headwear)) {
+                                combine(`${filename}`, sky, backdrop, location, body, eyes, headwear)
+                                filename++
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -36,7 +42,7 @@ class Entry implements ExclusionEntry {
     }
 }
 
-function excluded(environment: string, hat: string, body: string) : boolean {
+function excluded(sky: string, backdrop: string, location: string, body: string, headwear: string, eyes: string) : boolean {
     let config = input as Config
 
     var inclusionFound = false
@@ -50,6 +56,40 @@ function excluded(environment: string, hat: string, body: string) : boolean {
         return (includedAttribute == inclusionAttributeToTest && includedValue == includedValueToTest)
     }
 
+    function setFlagsExcluding(skip: string, attribute: string, value: string) {
+        exclusiveFound = true
+        if (skip != "skies") {
+            if (isIncluded(attribute, "skies", value, sky)) {
+                inclusionFound = true
+            }
+        }
+        if (skip != "backdrops") {
+            if (isIncluded(attribute, "backdrops", value, backdrop)) {
+                inclusionFound = true
+            }
+        }
+        if (skip != "locations") {
+            if (isIncluded(attribute, "locations", value, location)) {
+                inclusionFound = true
+            }
+        }
+        if (skip != "bodies") {
+            if (isIncluded(attribute, "bodies", value, body)) {
+                inclusionFound = true
+            }
+        }
+        if (skip != "headwear") {
+            if (isIncluded(attribute, "headwear", value, headwear)) {
+                inclusionFound = true
+            }
+        }
+        if (skip != "eyes") {
+            if (isIncluded(attribute, "eyes", value, eyes)) {
+                inclusionFound = true
+            }
+        }
+    }
+
     for (var exclusion of config.exclusives) {
         let pair = Object.entries(exclusion)
         let exclusive = new Entry(pair[0])
@@ -57,35 +97,27 @@ function excluded(environment: string, hat: string, body: string) : boolean {
         
         for (let exclusiveValue of exclusive.values) {
             for (let includedValue of inclusions.values) {
-                if (isExclusive(exclusive.attribute, "environments", exclusiveValue, environment)) {
-                    exclusiveFound = true
-                    if (isIncluded(inclusions.attribute, "hats", includedValue, hat)) {
-                        inclusionFound = true
-                    }
-                    if (isIncluded(inclusions.attribute, "bodies", includedValue, body)) {
-                        inclusionFound = true
-                    }
+                
+                if (isExclusive(exclusive.attribute, "skies", exclusiveValue, sky)) {
+                    setFlagsExcluding("skies", inclusions.attribute, includedValue)
+                }
+                if (isExclusive(exclusive.attribute, "backdrops", exclusiveValue, backdrop)) {
+                    setFlagsExcluding("backdrops", inclusions.attribute, includedValue)
+                }
+                if (isExclusive(exclusive.attribute, "locations", exclusiveValue, location)) {
+                    setFlagsExcluding("locations", inclusions.attribute, includedValue)
+                }
+                if (isExclusive(exclusive.attribute, "bodies", exclusiveValue, body)) {
+                    setFlagsExcluding("bodies", inclusions.attribute, includedValue)
+                }
+                if (isExclusive(exclusive.attribute, "headwear", exclusiveValue, headwear)) {
+                    setFlagsExcluding("headwear", inclusions.attribute, includedValue)
+                }
+                if (isExclusive(exclusive.attribute, "eyes", exclusiveValue, eyes)) {
+                    setFlagsExcluding("eyes", inclusions.attribute, includedValue)
                 }
 
-                if (isExclusive(exclusive.attribute, "hats", exclusiveValue, hat)) {
-                    exclusiveFound = true
-                    if (isIncluded(inclusions.attribute, "environments", includedValue, environment)) {
-                        inclusionFound = true
-                    }
-                    if (isIncluded(inclusions.attribute, "bodies", includedValue, body)) {
-                        inclusionFound = true
-                    }
-                }
-                if (isExclusive(exclusive.attribute, "bodies", exclusiveValue, hat)) {
-                    exclusiveFound = true
-                    if (isIncluded(inclusions.attribute, "environments", includedValue, environment)) {
-                        inclusionFound = true
-                    }
-                    if (isIncluded(inclusions.attribute, "hats", includedValue, body)) {
-                        inclusionFound = true
-                    }
-                }
-            }  
+            }
         }
     }
 

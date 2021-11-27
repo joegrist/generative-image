@@ -1,15 +1,18 @@
 {
-    "environments": ["sun", "space"],
-    "bodies": ["1", "2", "3", "4"],
-    "hats": ["propellor", "space", "none"],
+    "skies": ["blue", "bubbles", "night", "pride", "sun"],
+    "backdrops": ["low city", "tall city"],
+    "locations": ["dubai", "paris", "sydney"],
+    "bodies": ["blue", "orange", "pink", "purple"],
+    "headwear": ["earrings", "propellor", "space helmet", "sunglasses", "none"],
+    "eyes": ["basic", "girly", "shiny"],
     "exclusives": [
         {
-            "hats" : ["space"],
-            "environments" : ["space"]
+            "locations" : ["sydney"],
+            "backdrops" : ["tall city"]
         },
         {
-            "hats" : ["propellor"],
-            "environments" : ["sun"]
+            "locations" : ["dubai", "paris"],
+            "backdrops" : ["low city"]
         }
     ]
 }

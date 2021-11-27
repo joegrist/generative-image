@@ -1,14 +1,20 @@
 export interface Config {
-    environments: Array<string>
+    skies: Array<string>
+    backdrops: Array<string>
+    locations: Array<string>
     bodies: Array<string>
-    hats: Array<string>
+    eyes: Array<string>
+    headwear: Array<string>
     exclusives: Array<Exclusion>
 }
 
 export interface Exclusion {
-    environments: Array<string>
+    skies: Array<string>
+    backdrops: Array<string>
+    locations: Array<string>
     bodies: Array<string>
-    hats: Array<string>
+    eyes: Array<string>
+    headwear: Array<string>
 }
 
 export interface ExclusionEntry {
